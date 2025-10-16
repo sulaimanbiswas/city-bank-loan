@@ -41,6 +41,15 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.plans.index') }}"
+                    class="navItem {{ request()->routeIs('admin.plans.index') ? 'active' : '' }}">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="covid:covid-carrier-packages"></iconify-icon>
+                        <span>Plans</span>
+                    </span>
+                </a>
+            </li>
+            <li>
                 <a href="#" class="navItem">
                     <span class="flex items-center">
                         <iconify-icon class=" nav-icon" icon="heroicons-outline:cog-6-tooth"></iconify-icon>
@@ -53,6 +62,7 @@
                         <a href="{{ route('admin.site-settings.index') }}"
                             class="{{ request()->routeIs('admin.site-settings.*') ? 'active' : '' }}">Site Settings</a>
                     </li>
+
                 </ul>
             </li>
         </ul>

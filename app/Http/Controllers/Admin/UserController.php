@@ -25,7 +25,11 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $plans = \App\Models\Plan::where('status', 'active')->orderBy('name')->get(['name']);
+        return view('admin.users.edit', [
+            'user' => $user,
+            'plans' => $plans,
+        ]);
     }
 
     public function update(Request $request, User $user)
@@ -35,7 +39,7 @@ class UserController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'phone' => ['nullable', 'string', 'max:50'],
             'balance' => ['nullable', 'numeric', 'min:0'],
-            'current_plan' => ['nullable', 'string', 'max:100'],
+            'current_plan' => ['nullable', 'string', 'max:100', 'exists:plans,name'],
             'status' => ['required', 'in:active,inactive'],
             'user_type' => ['required', 'in:user,admin'],
         ]);

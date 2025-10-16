@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\PlanController as AdminPlanController;
 use App\Http\Controllers\ImpersonationController;
 
 Route::get('/', function () {
@@ -44,6 +45,15 @@ Route::middleware(['auth', 'usertype:admin'])->prefix('admin')->name('admin.')->
     Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
     Route::post('users/{user}/toggle', [AdminUserController::class, 'toggle'])->name('users.toggle');
     Route::post('users/{user}/impersonate', [AdminUserController::class, 'impersonate'])->name('users.impersonate');
+
+    // Plans Management
+    Route::get('plans', [AdminPlanController::class, 'index'])->name('plans.index');
+    Route::get('plans/create', [AdminPlanController::class, 'create'])->name('plans.create');
+    Route::post('plans', [AdminPlanController::class, 'store'])->name('plans.store');
+    Route::get('plans/{plan}/edit', [AdminPlanController::class, 'edit'])->name('plans.edit');
+    Route::patch('plans/{plan}', [AdminPlanController::class, 'update'])->name('plans.update');
+    Route::delete('plans/{plan}', [AdminPlanController::class, 'destroy'])->name('plans.destroy');
+    Route::post('plans/{plan}/toggle', [AdminPlanController::class, 'toggle'])->name('plans.toggle');
 });
 
 
