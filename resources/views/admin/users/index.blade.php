@@ -44,7 +44,7 @@
             <div class="card-body px-6 pb-6">
                 <div class="overflow-x-auto -mx-6 dashcode-data-table">
                     <div class="inline-block min-w-full align-middle">
-                        <div class="overflow-hidden min-h-[300px]">
+                        <div class="overflow-hidden min-h-[300px] flex flex-col justify-between">
                             <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700"
                                 id="data-table">
                                 <thead class=" border-t border-slate-100 dark:border-slate-800">
@@ -199,14 +199,15 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                            <div class="mt-6 px-6">
+                                {{ $users->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-3">
-            {{ $users->links() }}
-        </div>
+
     </div>
 @endsection
