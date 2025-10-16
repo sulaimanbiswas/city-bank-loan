@@ -66,6 +66,10 @@
                         <a href="{{ route('admin.limit.edit') }}"
                             class="{{ request()->routeIs('admin.limit.*') ? 'active' : '' }}">Limits</a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.gateways.index') }}"
+                            class="{{ request()->routeIs('admin.gateways.*') ? 'active' : '' }}">Gateways</a>
+                    </li>
 
                 </ul>
             </li>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlanController as AdminPlanController;
 use App\Http\Controllers\Admin\LimitController as AdminLimitController;
+use App\Http\Controllers\Admin\GatewayController as AdminGatewayController;
 use App\Http\Controllers\ImpersonationController;
 
 Route::get('/', function () {
@@ -59,6 +60,15 @@ Route::middleware(['auth', 'usertype:admin'])->prefix('admin')->name('admin.')->
     // Limits (singleton) - only edit/update, no create
     Route::get('limit/edit', [AdminLimitController::class, 'edit'])->name('limit.edit');
     Route::patch('limit', [AdminLimitController::class, 'update'])->name('limit.update');
+
+    // Gateways Management
+    Route::get('gateways', [AdminGatewayController::class, 'index'])->name('gateways.index');
+    Route::get('gateways/create', [AdminGatewayController::class, 'create'])->name('gateways.create');
+    Route::post('gateways', [AdminGatewayController::class, 'store'])->name('gateways.store');
+    Route::get('gateways/{gateway}/edit', [AdminGatewayController::class, 'edit'])->name('gateways.edit');
+    Route::patch('gateways/{gateway}', [AdminGatewayController::class, 'update'])->name('gateways.update');
+    Route::delete('gateways/{gateway}', [AdminGatewayController::class, 'destroy'])->name('gateways.destroy');
+    Route::post('gateways/{gateway}/toggle', [AdminGatewayController::class, 'toggle'])->name('gateways.toggle');
 });
 
 
