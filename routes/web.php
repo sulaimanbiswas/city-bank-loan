@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlanController as AdminPlanController;
+use App\Http\Controllers\Admin\LimitController as AdminLimitController;
 use App\Http\Controllers\ImpersonationController;
 
 Route::get('/', function () {
@@ -54,6 +55,10 @@ Route::middleware(['auth', 'usertype:admin'])->prefix('admin')->name('admin.')->
     Route::patch('plans/{plan}', [AdminPlanController::class, 'update'])->name('plans.update');
     Route::delete('plans/{plan}', [AdminPlanController::class, 'destroy'])->name('plans.destroy');
     Route::post('plans/{plan}/toggle', [AdminPlanController::class, 'toggle'])->name('plans.toggle');
+
+    // Limits (singleton) - only edit/update, no create
+    Route::get('limit/edit', [AdminLimitController::class, 'edit'])->name('limit.edit');
+    Route::patch('limit', [AdminLimitController::class, 'update'])->name('limit.update');
 });
 
 

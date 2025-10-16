@@ -62,6 +62,10 @@
                         <a href="{{ route('admin.site-settings.index') }}"
                             class="{{ request()->routeIs('admin.site-settings.*') ? 'active' : '' }}">Site Settings</a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.limit.edit') }}"
+                            class="{{ request()->routeIs('admin.limit.*') ? 'active' : '' }}">Limits</a>
+                    </li>
 
                 </ul>
             </li>
