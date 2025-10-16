@@ -35,7 +35,8 @@
                     <!-- Details grid -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                         <!-- General info -->
-                        <div class="p-4 rounded border bg-white lg:col-span-2">
+                        <div
+                            class="p-4 rounded border bg-white lg:col-span-2 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <div class="text-xs text-slate-500 mb-1">Site Title</div>
@@ -58,7 +59,7 @@
                                         <div class="flex flex-wrap gap-2">
                                             @foreach ($keywords as $kw)
                                                 <span
-                                                    class="px-2 py-0.5 rounded-full text-xs bg-slate-100 border">{{ $kw }}</span>
+                                                    class="px-2 py-0.5 rounded-full text-xs bg-slate-100 dark:bg-slate-700 border">{{ $kw }}</span>
                                             @endforeach
                                         </div>
                                     @else
@@ -67,13 +68,14 @@
                                 </div>
                                 <div class="md:col-span-2">
                                     <div class="text-xs text-slate-500 mb-1">Description</div>
-                                    <div class="text-slate-700">{{ $setting->description ?: '—' }}</div>
+                                    <div class="text-slate-700 dark:text-slate-400">{{ $setting->description ?: '—' }}</div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Social / contact -->
-                        <div class="p-4 rounded border bg-white">
+                        <div
+                            class="p-4 rounded border bg-white dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700">
                             <div class="text-xs text-slate-500 mb-2">Social & Contact</div>
                             <div class="space-y-2">
                                 <div class="flex items-center justify-between gap-2">

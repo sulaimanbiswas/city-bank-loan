@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'user_type' => 'user',
             'password' => bcrypt('password'),
+            'phone' => '123-456-7890',
         ]);
 
         // Create a default admin for testing
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
             'user_type' => 'admin',
             'password' => bcrypt('password'),
+            'phone' => '987-654-3210',
         ]);
     }
 }

@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\ImpersonationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +36,14 @@ Route::middleware(['auth', 'usertype:admin'])->prefix('admin')->name('admin.')->
     Route::get('site-settings', [SiteSettingController::class, 'index'])->name('site-settings.index');
     Route::get('site-settings/{site_setting}/edit', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
     Route::patch('site-settings/{site_setting}', [SiteSettingController::class, 'update'])->name('site-settings.update');
+
+    // Users Management
+    Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::patch('users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::delete('users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    Route::post('users/{user}/toggle', [AdminUserController::class, 'toggle'])->name('users.toggle');
+    Route::post('users/{user}/impersonate', [AdminUserController::class, 'impersonate'])->name('users.impersonate');
 });
 
 
@@ -45,3 +55,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+// Stop impersonation
+Route::post('/impersonate/stop', [ImpersonationController::class, 'stop'])->middleware('auth')->name('impersonate.stop');

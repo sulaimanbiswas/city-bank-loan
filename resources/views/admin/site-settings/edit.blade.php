@@ -52,9 +52,9 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1">Site Name</label>
-                        <input type="url" name="my_site" value="{{ old('site_name', $setting->my_site) }}"
+                        <input type="url" name="site_name" value="{{ old('site_name', $setting->site_name) }}"
                             class="form-control" />
-                        @error('my_site')
+                        @error('site_name')
                             <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
