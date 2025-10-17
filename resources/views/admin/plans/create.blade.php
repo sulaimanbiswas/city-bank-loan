@@ -58,11 +58,6 @@
                         <form class="space-y-4" method="POST" action="{{ route('admin.plans.store') }}">
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-7">
-                                <div class="input-area relative col-span-2">
-                                    <label for="largeInput" class="form-label">Name</label>
-                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control"
-                                        placeholder="Name" required>
-                                </div>
                                 <div class="input-area">
                                     <label for="select" class="form-label">Types</label>
                                     <select id="select" class="form-control" name="type">

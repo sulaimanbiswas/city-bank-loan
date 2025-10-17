@@ -10,17 +10,10 @@ use App\Http\Controllers\Admin\GatewayController as AdminGatewayController;
 use App\Http\Controllers\ImpersonationController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
 
-// Generic dashboard route used by auth scaffolding; redirects per user_type
-// Route::get('/dashboard', function () {
-//     $user = request()->user();
-//     if ($user && strtolower((string) $user->user_type) === 'admin') {
-//         return redirect()->route('admin.dashboard');
-//     }
-//     return redirect()->route('user.dashboard');
-// })->middleware(['auth'])->name('dashboard');
+    return redirect()->route('login');
+    // return view('welcome');
+});
 
 // User routes
 Route::middleware(['auth', 'usertype:user'])->name('user.')->group(function () {

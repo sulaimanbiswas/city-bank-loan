@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Users')
+@section('title', 'Plans')
 
 @section('content')
     <div class="mb-5">
@@ -83,36 +83,14 @@
                                 id="data-table">
                                 <thead class=" border-t border-slate-100 dark:border-slate-800">
                                     <tr>
-                                        <th scope="col" class=" table-th ">
-                                            Id
-                                        </th>
+                                        <th scope="col" class=" table-th "> Id </th>
 
-                                        <th scope="col" class=" table-th ">
-                                            Name
-                                        </th>
-
-                                        <th scope="col" class=" table-th ">
-                                            Label
-                                        </th>
-
-                                        <th scope="col" class=" table-th ">
-                                            Types
-                                        </th>
-
-                                        <th scope="col" class=" table-th ">
-                                            Value
-                                        </th>
-
-                                        <th scope="col" class=" table-th ">
-                                            Interest
-                                        </th>
-                                        <th scope="col" class=" table-th ">
-                                            Status
-                                        </th>
-                                        </th>
-                                        <th scope="col" class=" table-th ">
-                                            Action
-                                        </th>
+                                        <th scope="col" class=" table-th "> Types </th>
+                                        <th scope="col" class=" table-th "> Label </th>
+                                        <th scope="col" class=" table-th "> Value </th>
+                                        <th scope="col" class=" table-th "> Interest </th>
+                                        <th scope="col" class=" table-th "> Status </th>
+                                        <th scope="col" class=" table-th "> Action </th>
 
                                     </tr>
                                 </thead>
@@ -121,23 +99,22 @@
                                     @forelse ($plans as $plan)
                                         <tr>
                                             <td class="table-td">{{ $plan->id }}</td>
-                                            <td class="table-td">{{ $plan->name }}</td>
+
+                                            <td class="table-td capitalize">{{ $plan->types }}</td>
                                             <td class="table-td ">{{ $plan->label }}</td>
-                                            <td class="table-td normal-case">{{ $plan->types }}</td>
                                             <td class="table-td ">
                                                 <div>
                                                     {{ $plan->value ?? '-' }}
                                                 </div>
                                             </td>
                                             <td class="table-td normal-case">
-                                                {{ number_format($plan->interest_rate ?? 0, 2) }}%</td>
+                                                {{ number_format($plan->interest_rate ?? 0, 2) }}%
+                                            </td>
                                             <td class="table-td ">
-
                                                 <div
                                                     class="inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25  @if ($plan->status === 'active') text-success-500 bg-success-500 @else text-warning-500 bg-warning-500 @endif">
                                                     {{ ucfirst($plan->status) }}
                                                 </div>
-
                                             </td>
                                             <td class="table-td ">
                                                 <div>

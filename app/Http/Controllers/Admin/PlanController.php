@@ -12,9 +12,9 @@ class PlanController extends Controller
     {
         $q = $request->string('q')->toString();
         $plans = Plan::when($q, function ($query) use ($q) {
-            $query->where('name', 'like', "%{$q}%")
-                ->orWhere('label', 'like', "%{$q}%");
-        })->latest()->paginate(15)->withQueryString();
+            $query->where('label', 'like', "%{$q}%")
+                ->orWhere('value', 'like', "%{$q}%");
+        })->paginate(15)->withQueryString();
         return view('admin.plans.index', compact('plans'));
     }
 
@@ -26,7 +26,6 @@ class PlanController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'label' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'in:amount,duration,reason'],
             'value' => ['nullable', 'string', 'max:255'],
@@ -50,7 +49,6 @@ class PlanController extends Controller
     public function update(Request $request, Plan $plan)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'label' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'in:amount,duration,reason'],
             'value' => ['nullable', 'string', 'max:255'],

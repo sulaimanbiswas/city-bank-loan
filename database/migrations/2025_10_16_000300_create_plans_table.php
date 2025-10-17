@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('label')->nullable();
             $table->string('types')->nullable(); // e.g., "amount" | "duration" | "reason"
             $table->string('value')->nullable();
