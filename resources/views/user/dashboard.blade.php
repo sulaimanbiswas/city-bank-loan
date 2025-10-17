@@ -7,7 +7,7 @@
 
     <div class="bg-gray-200 px-2 py-4 rounded-xs my-2">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <a href="#" class="text-base font-medium">
+            <a href="{{ route('user.loan.apply') }}" class="text-base font-medium">
                 <div class="bg-white p-4 rounded shadow flex flex-col items-center justify-center hover:bg-gray-100">
                     <i class="bx bx-shield-plus text-4xl text-[#ff0000] mb-2"></i>
                     <span class="text-base font-medium">লোন আবেদন</span>

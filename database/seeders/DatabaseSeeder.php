@@ -19,15 +19,6 @@ class DatabaseSeeder extends Seeder
             SiteSettingSeeder::class,
         ]);
 
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'user_type' => 'user',
-            'password' => bcrypt('password'),
-            'phone' => '123-456-7890',
-        ]);
-
         // Create a default admin for testing
         User::factory()->create([
             'name' => 'Admin User',
@@ -35,6 +26,14 @@ class DatabaseSeeder extends Seeder
             'user_type' => 'admin',
             'password' => bcrypt('password'),
             'phone' => '987-654-3210',
+        ]);
+        // Create a default regular user for testing
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'user_type' => 'user',
+            'password' => bcrypt('password'),
+            'phone' => '123-456-7890',
         ]);
     }
 }

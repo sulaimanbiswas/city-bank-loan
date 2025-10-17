@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Loan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,16 +20,46 @@ class UserController extends Controller
                     ->orWhere('phone', 'like', "%{$search}%");
             });
         }
+        // Sum remaining as total_payable across approved loans; there is no repayments yet
+        $query->withSum(['loans as remaining_amount' => function ($q) {
+            $q->where('status', 'approved');
+        }], 'total_payable');
+
         $users = $query->latest()->paginate(15)->withQueryString();
         return view('admin.users.index', compact('users'));
     }
 
     public function edit(User $user)
     {
-        $plans = \App\Models\Plan::where('status', 'active')->orderBy('name')->get(['name']);
         return view('admin.users.edit', [
             'user' => $user,
-            'plans' => $plans,
+        ]);
+    }
+
+    public function show(User $user)
+    {
+        // Loan summary for this user (approved loans)
+        $agg = Loan::where('user_id', $user->id)
+            ->where('status', 'approved')
+            ->selectRaw('COALESCE(SUM(principal),0) as total_principal, COALESCE(SUM(monthly_installment),0) as total_emi, COALESCE(SUM(total_payable),0) as total_payable')
+            ->first();
+        $loanSummary = [
+            'total_principal' => (float) ($agg->total_principal ?? 0),
+            'monthly_emi' => (float) ($agg->total_emi ?? 0),
+            // No repayments implemented yet; treat remaining as total payable
+            'remaining' => (float) ($agg->total_payable ?? 0),
+        ];
+
+        // Recent loans (latest 10)
+        $loans = Loan::where('user_id', $user->id)
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('admin.users.show', [
+            'user' => $user,
+            'loanSummary' => $loanSummary,
+            'loans' => $loans,
         ]);
     }
 
@@ -39,7 +70,6 @@ class UserController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'phone' => ['nullable', 'string', 'max:50'],
             'balance' => ['nullable', 'numeric', 'min:0'],
-            'current_plan' => ['nullable', 'string', 'max:100', 'exists:plans,name'],
             'status' => ['required', 'in:active,inactive'],
             'user_type' => ['required', 'in:user,admin'],
         ]);

@@ -50,6 +50,15 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.loans.index') }}"
+                    class="navItem {{ request()->routeIs('admin.loans.*') ? 'active' : '' }}">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="mdi:bank"></iconify-icon>
+                        <span>Loans</span>
+                    </span>
+                </a>
+            </li>
+            <li>
                 <a href="#" class="navItem">
                     <span class="flex items-center">
                         <iconify-icon class=" nav-icon" icon="heroicons-outline:cog-6-tooth"></iconify-icon>

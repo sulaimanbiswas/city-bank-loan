@@ -44,7 +44,7 @@
             <div class="card-body px-6 pb-6">
                 <div class="overflow-x-auto -mx-6 dashcode-data-table">
                     <div class="inline-block min-w-full align-middle">
-                        <div class="overflow-hidden min-h-[300px] flex flex-col justify-between">
+                        <div class="overflow-hidden min-h-[390px] flex flex-col justify-between">
                             <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700"
                                 id="data-table">
                                 <thead class=" border-t border-slate-100 dark:border-slate-800">
@@ -70,7 +70,7 @@
                                         </th>
 
                                         <th scope="col" class=" table-th ">
-                                            Plan
+                                            Remaining
                                         </th>
                                         <th scope="col" class=" table-th ">
                                             Status
@@ -98,7 +98,11 @@
                                                     ${{ number_format($user->balance ?? 0, 2) }}
                                                 </div>
                                             </td>
-                                            <td class="table-td normal-case">{{ $user->current_plan ?? '-' }}</td>
+                                            <td class="table-td ">
+                                                <div>
+                                                    ৳{{ number_format($user->remaining_amount ?? 0, 2) }}
+                                                </div>
+                                            </td>
                                             <td class="table-td ">
 
                                                 <div
@@ -119,23 +123,38 @@
                                                                     icon="heroicons-outline:dots-vertical"></iconify-icon>
                                                             </button>
                                                             <ul
-                                                                class="absolute dropdown-menu min-w-[120px]  text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
+                                                                class="absolute dropdown-menu min-w-[120px] text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
+                                                                @if ($user->user_type !== 'admin')
+                                                                    <li>
+                                                                        <form method="POST"
+                                                                            action="{{ route('admin.users.impersonate', $user) }}"
+                                                                            class="flex items-center hover:bg-slate-100 w-full dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
+                                                                            @csrf
+                                                                            <button type="submit"
+                                                                                class="country-list flex items-start w-full px-4 py-2">
+                                                                                <iconify-icon
+                                                                                    class="text-lg text-textColor dark:text-white mr-2"
+                                                                                    icon="mynaui:external-link">
+                                                                                </iconify-icon>
+                                                                                <span
+                                                                                    class="dropdown-option whitespace-nowrap">
+                                                                                    Login as
+                                                                                </span>
+                                                                            </button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endif
                                                                 <li>
-                                                                    <form method="POST"
-                                                                        action="{{ route('admin.users.impersonate', $user) }}"
-                                                                        class="flex items-center hover:bg-slate-100 w-full dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                            class="country-list flex items-start w-full px-4 py-2">
-                                                                            <iconify-icon
-                                                                                class="text-lg text-textColor dark:text-white mr-2"
-                                                                                icon="mynaui:external-link">
-                                                                            </iconify-icon>
-                                                                            <span class="dropdown-option">
-                                                                                Login as
-                                                                            </span>
-                                                                        </button>
-                                                                    </form>
+                                                                    <a href="{{ route('admin.users.show', $user) }}"
+                                                                        class="flex items-center px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
+                                                                        <iconify-icon
+                                                                            class="text-lg text-textColor dark:text-white mr-2"
+                                                                            icon="mynaui:eye">
+                                                                        </iconify-icon>
+                                                                        <span class="dropdown-option whitespace-nowrap">
+                                                                            View details
+                                                                        </span>
+                                                                    </a>
                                                                 </li>
                                                                 <li>
                                                                     <form method="POST"
@@ -161,7 +180,7 @@
                                                                             class="text-lg text-textColor dark:text-white mr-2"
                                                                             icon="prime:user-edit">
                                                                         </iconify-icon>
-                                                                        <span class="dropdown-option">
+                                                                        <span class="dropdown-option whitespace-nowrap">
                                                                             Edit
                                                                         </span>
                                                                     </a>
@@ -178,7 +197,8 @@
                                                                                 class="text-lg text-textColor dark:text-white mr-2"
                                                                                 icon="material-symbols-light:delete-outline">
                                                                             </iconify-icon>
-                                                                            <span class="dropdown-option">
+                                                                            <span
+                                                                                class="dropdown-option whitespace-nowrap">
                                                                                 Delete
                                                                             </span>
                                                                         </button>

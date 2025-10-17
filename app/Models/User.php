@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Loan;
 
 class User extends Authenticatable
 {
@@ -23,7 +24,6 @@ class User extends Authenticatable
         'phone',
         'password',
         'balance',
-        'current_plan',
         'user_type',
     ];
 
@@ -50,5 +50,10 @@ class User extends Authenticatable
             'balance' => 'decimal:2',
             'is_verified' => 'boolean',
         ];
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
     }
 }

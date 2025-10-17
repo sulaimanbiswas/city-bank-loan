@@ -27,6 +27,9 @@
                         <div class="flex-1">
                             <div class="card-title text-slate-900 dark:text-white">Edit User</div>
                         </div>
+                        <div class="flex items-center gap-2">
+                            <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-outline">View Details</a>
+                        </div>
                     </header>
                     <div class="card-text h-full ">
                         @if ($errors->any())
@@ -78,25 +81,6 @@
                                     <div class="mt-1 text-xs text-red-600">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <div class="input-area relative pl-28">
-                                <label for="current_plan" class="inline-inputLabel">Current Plan</label>
-                                <div class="relative">
-                                    <select id="current_plan" name="current_plan" class="form-select !pl-9">
-                                        <option value="">None</option>
-                                        @foreach ($plans ?? [] as $plan)
-                                            <option value="{{ $plan->name }}" @selected(old('current_plan', $user->current_plan) === $plan->name)>
-                                                {{ $plan->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <iconify-icon icon="heroicons-outline:document-text"
-                                        class="absolute left-2 top-1/2 -translate-y-1/2 text-base text-slate-500"></iconify-icon>
-                                </div>
-                                @error('current_plan')
-                                    <div class="mt-1 text-xs text-red-600">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- Hidden fields to satisfy controller validation and preserve existing values -->
                             <input type="hidden" name="status" value="{{ old('status', $user->status) }}" />
                             <input type="hidden" name="user_type" value="{{ old('user_type', $user->user_type) }}" />
