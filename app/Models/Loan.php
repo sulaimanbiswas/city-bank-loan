@@ -68,4 +68,30 @@ class Loan extends Model
     {
         return $this->belongsTo(Gateway::class, 'deposit_gateway_id');
     }
+
+    public function getDocFrontUrlAttribute(): ?string
+    {
+        return $this->toPublicUrl($this->doc_front_path);
+    }
+
+    public function getDocBackUrlAttribute(): ?string
+    {
+        return $this->toPublicUrl($this->doc_back_path);
+    }
+
+    public function getDepositScreenshotUrlAttribute(): ?string
+    {
+        return $this->toPublicUrl($this->deposit_screenshot_path);
+    }
+
+    protected function toPublicUrl(?string $path): ?string
+    {
+        if (!$path) return null;
+        $p = ltrim($path, '/');
+        if (str_starts_with($p, 'http')) return $p;
+        // If legacy stored on storage disk
+        if (str_starts_with($p, 'storage/')) return asset($p);
+        // New scheme: paths under public/ root
+        return asset($p);
+    }
 }

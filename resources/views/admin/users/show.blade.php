@@ -37,17 +37,17 @@
                         @isset($loanSummary)
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div class="p-4 rounded border border-slate-200 dark:border-slate-700">
-                                    <div class="text-xs text-slate-500">মোট লোন</div>
+                                    <div class="text-xs text-slate-500">Total Loan</div>
                                     <div class="text-lg font-semibold">
                                         ৳{{ number_format($loanSummary['total_principal'] ?? 0, 2) }}</div>
                                 </div>
                                 <div class="p-4 rounded border border-slate-200 dark:border-slate-700">
-                                    <div class="text-xs text-slate-500">মাসিক কিস্তি (EMI)</div>
+                                    <div class="text-xs text-slate-500">Monthly EMI</div>
                                     <div class="text-lg font-semibold">৳{{ number_format($loanSummary['monthly_emi'] ?? 0, 2) }}
                                     </div>
                                 </div>
                                 <div class="p-4 rounded border border-slate-200 dark:border-slate-700">
-                                    <div class="text-xs text-slate-500">বাকি</div>
+                                    <div class="text-xs text-slate-500">Remaining</div>
                                     <div class="text-lg font-semibold">৳{{ number_format($loanSummary['remaining'] ?? 0, 2) }}
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                                     <tr>
                                                         <td class="table-td">{{ $loan->id }}</td>
                                                         <td class="table-td">৳{{ number_format($loan->principal, 2) }}</td>
-                                                        <td class="table-td">{{ $loan->duration_months }} mo</td>
+                                                        <td class="table-td">{{ $loan->duration_months }} month</td>
                                                         <td class="table-td">
                                                             {{ rtrim(rtrim(number_format($loan->interest_rate, 2), '0'), '.') }}%
                                                         </td>

@@ -45,7 +45,11 @@ class GatewayController extends Controller
         ];
 
         if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->store('gateways', 'public');
+            // Ensure directory exists directly under public/uploads
+            if (!Storage::disk('public_root')->exists('uploads/gateways')) {
+                Storage::disk('public_root')->makeDirectory('uploads/gateways');
+            }
+            $path = $request->file('logo')->store('uploads/gateways', 'public_root');
             $data['logo_path'] = $path;
         }
 
@@ -76,11 +80,16 @@ class GatewayController extends Controller
         ]);
 
         if ($request->hasFile('logo')) {
-            // Delete old logo if exists
+            // Delete old logo if exists (try both new and legacy locations)
             if ($gateway->logo_path) {
+                Storage::disk('public_root')->delete($gateway->logo_path);
                 Storage::disk('public')->delete($gateway->logo_path);
             }
-            $path = $request->file('logo')->store('gateways', 'public');
+            // Ensure directory exists directly under public/uploads
+            if (!Storage::disk('public_root')->exists('uploads/gateways')) {
+                Storage::disk('public_root')->makeDirectory('uploads/gateways');
+            }
+            $path = $request->file('logo')->store('uploads/gateways', 'public_root');
             $gateway->logo_path = $path;
         }
 
@@ -91,6 +100,7 @@ class GatewayController extends Controller
     public function destroy(Gateway $gateway)
     {
         if ($gateway->logo_path) {
+            Storage::disk('public_root')->delete($gateway->logo_path);
             Storage::disk('public')->delete($gateway->logo_path);
         }
         $gateway->delete();

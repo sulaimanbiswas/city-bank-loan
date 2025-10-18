@@ -36,8 +36,12 @@ class Gateway extends Model
         if (str_starts_with($this->logo_path, 'http')) {
             return $this->logo_path;
         }
-        // Assuming files are stored on 'public' disk, which maps to storage/app/public
-        // and is symlinked to public/storage
-        return asset('storage/' . ltrim($this->logo_path, '/'));
+        $path = ltrim($this->logo_path, '/');
+        // Legacy: stored under storage disk (public/storage)
+        if (str_starts_with($path, 'storage/')) {
+            return asset($path);
+        }
+        // New: stored directly under public/
+        return asset($path);
     }
 }

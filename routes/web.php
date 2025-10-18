@@ -23,13 +23,21 @@ Route::middleware(['auth', 'usertype:user'])->name('user.')->group(function () {
         return view('user.dashboard');
     })->name('dashboard');
 
+    // Beautiful Profile view
+    Route::get('/profile/show', [\App\Http\Controllers\ProfileController::class, 'showProfile'])->name('profile.show');
+
     // Loan Apply (User)
     Route::get('/loan/apply', [UserLoanController::class, 'create'])->name('loan.apply');
     Route::post('/loan/apply/preview', [UserLoanController::class, 'preview'])->name('loan.apply.preview');
     Route::post('/loan/apply', [UserLoanController::class, 'store'])->name('loan.apply.store');
+
+    // My Loans page
+    Route::get('/loans', [UserLoanController::class, 'myLoans'])->name('loans.index');
+
     // KYC Documents (session-backed)
     Route::get('/loan/documents', [UserLoanController::class, 'documentsForm'])->name('loan.documents.form');
     Route::post('/loan/documents', [UserLoanController::class, 'documentsStore'])->name('loan.documents.store');
+
     // Deposit step (session-backed)
     Route::get('/loan/deposit', [UserLoanController::class, 'depositForm'])->name('loan.deposit.form');
     Route::post('/loan/deposit', [UserLoanController::class, 'depositStore'])->name('loan.deposit.store');

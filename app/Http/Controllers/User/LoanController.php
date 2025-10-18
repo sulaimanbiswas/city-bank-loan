@@ -189,7 +189,7 @@ class LoanController extends Controller
         $request->session()->put('loan_apply', $payload);
 
         // Go to documents upload step (session-backed)
-        return redirect()->route('user.loan.documents.form')->with('status', 'আপনার আবেদন সংরক্ষণ করা হয়েছে, এখন ডকুমেন্ট আপলোড করুন।');
+        return redirect()->route('user.loan.documents.form')->with('status', 'অবেদন তথ্য সংরক্ষিত হয়েছে, এখন ডকুমেন্ট আপলোড করুন।');
     }
 
     // Documents step: form (session-backed)
@@ -219,10 +219,16 @@ class LoanController extends Controller
 
         $data['doc_type'] = $validated['doc_type'];
         if ($request->hasFile('doc_front')) {
-            $data['doc_front_path'] = $request->file('doc_front')->store('loan-docs', 'public');
+            if (!Storage::disk('public_root')->exists('uploads/loan-docs')) {
+                Storage::disk('public_root')->makeDirectory('uploads/loan-docs');
+            }
+            $data['doc_front_path'] = $request->file('doc_front')->store('uploads/loan-docs', 'public_root');
         }
         if ($request->hasFile('doc_back')) {
-            $data['doc_back_path'] = $request->file('doc_back')->store('loan-docs', 'public');
+            if (!Storage::disk('public_root')->exists('uploads/loan-docs')) {
+                Storage::disk('public_root')->makeDirectory('uploads/loan-docs');
+            }
+            $data['doc_back_path'] = $request->file('doc_back')->store('uploads/loan-docs', 'public_root');
         } else {
             $data['doc_back_path'] = null;
         }
@@ -285,7 +291,10 @@ class LoanController extends Controller
         $loan->deposit_account_number = $gateway->account_number;
         $loan->deposit_transaction_id = $validated['transaction_id'];
         if ($request->hasFile('screenshot')) {
-            $loan->deposit_screenshot_path = $request->file('screenshot')->store('loan-deposits', 'public');
+            if (!Storage::disk('public_root')->exists('uploads/loan-deposits')) {
+                Storage::disk('public_root')->makeDirectory('uploads/loan-deposits');
+            }
+            $loan->deposit_screenshot_path = $request->file('screenshot')->store('uploads/loan-deposits', 'public_root');
         }
         $loan->deposit_submitted_at = now();
         $loan->save();
@@ -293,11 +302,19 @@ class LoanController extends Controller
         // Clear session payload to avoid duplicates
         $request->session()->forget('loan_apply');
 
-        return redirect()->route('user.dashboard')->with('status', 'জামানত জমা দেওয়া হয়েছে, আপনার আবেদন প্রশাসনিক পর্যালোচনায় আছে।');
+        return redirect()->route('user.dashboard')->with('status', 'Your deposit has been submitted, your application is under administrative review.');
     }
 
     private function authorizeLoan(Request $request, Loan $loan): void
     {
         abort_unless($loan->user_id === $request->user()->id, 403);
+    }
+
+    // My Loans page
+    public function myLoans(Request $request)
+    {
+        $user = $request->user();
+        $loans = $user->loans()->latest()->get();
+        return view('user.loan.index', compact('loans'));
     }
 }

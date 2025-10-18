@@ -19,12 +19,12 @@
 
 <body class="font-sans antialiased">
     @if (session('impersonator_id'))
-        <div class="w-full bg-amber-500 text-white text-sm py-2">
-            <div class="container mx-auto max-w-5xl flex items-center justify-between px-2">
+        <div class="container mx-auto max-w-5xl w-full bg-[#ff0000] text-white text-sm py-2 mb-2">
+            <div class=" flex items-center justify-between px-5">
                 <span>You are browsing as a user.</span>
                 <form method="POST" action="{{ route('impersonate.stop') }}">
                     @csrf
-                    <button class="px-2 py-1 bg-white text-amber-600 rounded">Return to Admin</button>
+                    <button class="px-2 py-1 bg-white text-[#ff0000] rounded">Return to Admin</button>
                 </form>
             </div>
         </div>
@@ -38,10 +38,7 @@
             <p class="text-sm text-gray-600">লোড হচ্ছে...</p>
         </div>
     </div>
-    <div class="container mx-auto max-w-5xl border border-red-600 px-2">
-
-
-
+    <div class="container mx-auto max-w-5xl border border-red-600 px-2 my-1">
         <header class="mb-2 relative overflow-hidden rounded">
             <img src="{{ asset('images/topimg.jpg') }}" alt=""
                 class="absolute inset-0 w-full h-full object-cover">
@@ -70,17 +67,12 @@
                         </nav>
                     @endauth
                 </div>
-
                 <div class="flex items-center gap-3 mt-3 bg-[#ff0000] px-2 py-1 rounded-xs">
                     <span class="text-white font-semibold text-sm uppercase">স্বাগতম, {{ Auth::user()->name }}!</span>
 
                 </div>
             </div>
         </header>
-
-        <!-- <div class="bg-[#ff0000] px-2 py-1 rounded-xs">
-            <span class="text-white font-semibold text-sm">স্বাগতম, {{ Auth::user()->name }}!</span>
-        </div> -->
         <div class="bg-gray-200 px-2 py-1 rounded-xs mt-2">
             <marquee class="text-black font-medium text-sm" behavior="scroll" direction="left" onmouseover="this.stop()"
                 onmouseout="this.start()">আপনার আর্থিক সহায়তার জন্য আমরা প্রস্তুত</marquee>

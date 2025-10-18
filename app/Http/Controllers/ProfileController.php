@@ -57,4 +57,27 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Beautiful profile view for user dashboard
+     */
+    public function showProfile(Request $request): View
+    {
+        $user = $request->user();
+        // Pre-compute quick stats
+        $totalLoans = $user->loans()->count();
+        $approvedLoans = $user->loans()->where('status', 'approved')->count();
+        $pendingLoans = $user->loans()->where('status', 'pending')->count();
+        $totalPrincipal = $user->loans()->sum('principal');
+        $totalPayable = $user->loans()->sum('total_payable');
+
+        return view('user.profile.show', compact(
+            'user',
+            'totalLoans',
+            'approvedLoans',
+            'pendingLoans',
+            'totalPrincipal',
+            'totalPayable'
+        ));
+    }
 }
